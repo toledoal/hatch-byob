@@ -2,7 +2,7 @@
 
 var path = require("path");
 var fs = require("fs");
-// var Blockchain = require("./blockchain.js");
+var Blockchain = require("./blockchain.js");
 var MyREPL = require("./repl.js");
 
 var args = require("minimist")(process.argv.slice(2),{
@@ -15,17 +15,24 @@ if (args.load) {
 	let blocks = JSON.parse(contents);
 
 	// TODO
-
-	// Hint: isValid()
+	Blockchain.blocks = blocks;
+	Blockchain.isValid();
 }
 
 var listener = MyREPL.start();
 
 listener.on("add",function onAdd(text = ""){
-	// TODO
+	Blockchain.addBlock(text);
 });
 
-// TODO: "print", "save"
+listener.on("print",function onAdd(text = ""){
+	Blockchain.print();
+});
+
+listener.on("save",function onAdd(text = ""){
+	let toSave = Blockchain.print();
+	fs.writeFileSync(file,JSON.stringify(toSave),"utf-8");
+});
 
 // Hint:
 // fs.writeFileSync(file,JSON.stringify( .. ),"utf-8");
