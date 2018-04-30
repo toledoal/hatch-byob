@@ -25,13 +25,14 @@ listener.on("add",function onAdd(text = ""){
 	Blockchain.addBlock(text);
 });
 
-listener.on("print",function onAdd(text = ""){
+listener.on("print",function onPrint(){
 	Blockchain.print();
 });
 
-listener.on("save",function onAdd(text = ""){
-	let toSave = Blockchain.print();
-	fs.writeFileSync(file,JSON.stringify(toSave),"utf-8");
+listener.on("save",function onSave(file = ""){
+	if (file !== ""){
+		fs.writeFileSync(file,JSON.stringify(Blockchain.blocks),"utf-8");
+	}
 });
 
 // Hint:
