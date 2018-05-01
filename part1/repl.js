@@ -30,15 +30,14 @@ function start() {
 		replServer.defineCommand("editor",{ action: ignoreCommand, });
 		replServer.defineCommand("exit",{ action: ignoreCommand, });
 		replServer.defineCommand("load",{ action: ignoreCommand, });
-		replServer.defineCommand("save",{ action: ignoreCommand, });
 
 		// define quit command
 		replServer.defineCommand("q",{ action: quit, });
 
 		// define add, print, and save commands
-		replServer.defineCommand("add",{ action: action("add"),	});
-		replServer.defineCommand("print",{ action: action("print"),	});
-		replServer.defineCommand("save",{ action: action("save"),	});
+		replServer.defineCommand("add",{ action: action("add"),});
+		replServer.defineCommand("print",{ action: action("print"),});
+		replServer.defineCommand("save",{ action: action("save"),});
 		// TODO: "print", "save"
 
 		messages = new EventEmitter({ wildcard: true, delimiter: ":", newListener: false, maxListeners: 1E6, verboseMemoryLeak: true, });

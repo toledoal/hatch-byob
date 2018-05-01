@@ -14,9 +14,10 @@ if (args.load) {
 	let contents = fs.readFileSync(file,"utf-8");
 	let blocks = JSON.parse(contents);
 
-	// TODO
+	// Validates the block chain
+	if (Blockchain.isValid()){
 	Blockchain.blocks = blocks;
-	Blockchain.isValid();
+	}
 }
 
 var listener = MyREPL.start();
@@ -32,8 +33,5 @@ listener.on("print",function onPrint(){
 listener.on("save",function onSave(file = ""){
 	if (file !== ""){
 		fs.writeFileSync(file,JSON.stringify(Blockchain.blocks),"utf-8");
-	}
+	} 
 });
-
-// Hint:
-// fs.writeFileSync(file,JSON.stringify( .. ),"utf-8");

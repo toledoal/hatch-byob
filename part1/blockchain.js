@@ -20,7 +20,6 @@ Object.assign(module.exports,{
             prevHash: this.blocks[this.blocks.length-1].hash,
             timestamp: Date.now(),
         }
-
         block.hash = this.createBlockHash(block);
         this.blocks.push(block);
     },
@@ -31,39 +30,49 @@ Object.assign(module.exports,{
         console.log(this.blocks);
     },
     isValid: function(){
-        if (Array.isArray(this.blocks) && this.blocks.length >= 1){
-            if (this.blocks[0].hash === '000000' && this.blocks[0].index === 0){
 
+        // Validates Blockchain and Genesis Block Existance
+        if (Array.isArray(this.blocks) && 
+        this.blocks.length >= 1 &&
+        this.blocks[0].hash === '000000' && 
+        this.blocks[0].index === 0) {
+           
                 let dirtyIndex = this.blocks.filter( (block, i, arr) => {
+                    // Validates Indexes Correspondance
                     if (block.index !== i){
                         return block;
                     }
                 });
 
                 let dirtyHash = this.blocks.filter( (block, i, arr) => {
+                    // Validates that PrevHash corresponds with Hash
                     if (i > 0){
-                    if (block.prevHash !== arr[i - 1].hash){
-                        return block;
-                    }
+                        if (block.prevHash !== arr[i - 1].hash){
+                            return block;
+                        }
                     }
                 });
 
                 let dataString = this.blocks.filter( (block, i, arr) => {
+                    // Validates block data is string
                     if (typeof block.data !== "string"){
                         return block;
                     }
                 });
 
                 let validHash = this.blocks.filter( (block, i, arr) => {
+                    // Validates hash is 64 chars long
                     if (i > 0){
-                    if (block.hash.length !== 64){
-                        return block;
-                    }
+                        if (block.hash.length !== 64){
+                            return block;
+                        }
                     }
                 });
 
-               
-
+                // Checks if there is any dirty block
+                // Due to testing requirements we have a 'chained validation'
+                // We could update these to match a more granular validation
+                // And report the 'culprit' block 
                 if(dirtyIndex.length !== 0){
                     return false;
                 } else{
@@ -81,14 +90,7 @@ Object.assign(module.exports,{
                         }
                     }
                 }
-
-                
-                
-
-            }else{
-                return false;
-            }
-                
+ 
         }else{
             return false;
         }      
