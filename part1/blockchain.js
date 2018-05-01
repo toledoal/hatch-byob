@@ -1,8 +1,6 @@
 "use strict";
 
-var SHA256 = require("crypto-js/sha256");
 var Crypto = require("crypto-js");
-
 
 Object.assign(module.exports,{
     blocks: [

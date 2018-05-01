@@ -6,8 +6,8 @@ var http = require("http");
 
 var getStream = require("get-stream");
 
-// var Blockchain = require("./blockchain.js");
-// var TransactionPool = require("./transaction-pool.js");
+var Blockchain = require("./blockchain.js");
+var TransactionPool = require("./transaction-pool.js");
 
 var args = require("minimist")(process.argv.slice(2),{
 	string: [ "load" ],
