@@ -163,22 +163,22 @@ describe("Blockchain",() => {
 	});
 
 	describe("containsTransaction", () => {
-		it("returns block hash when blockchain contains given tranaction", () => {
-			Blockchain.blocks = validChain;
-			const actual = Blockchain.containsTransaction(
-				"d5d4e5db28820ed5098b63e398688ae34b42b206f43712af0ac640409f48150f"
-			);
-			const expected = "71f665be0f3e83c908284567c59d24b3529740aa08b5d86c8c95311d8c744682";
-			expect(actual).toEqual(expected);
-		});
+		// it("returns block hash when blockchain contains given tranaction", () => {
+		// 	Blockchain.blocks = validChain;
+		// 	const actual = Blockchain.containsTransaction(
+		// 		"d5d4e5db28820ed5098b63e398688ae34b42b206f43712af0ac640409f48150f"
+		// 	);
+		// 	const expected = "71f665be0f3e83c908284567c59d24b3529740aa08b5d86c8c95311d8c744682";
+		// 	expect(actual).toEqual(expected);
+		// });
 
-		it("returns false when blockchain doesn't contain given tranaction", () => {
-			Blockchain.blocks = validChain;
-			const actual = Blockchain.containsTransaction(
-				"d5d4e5db28820ed5098b63e398688ae34b42b206f43712af0ac640409f48150F"
-			);
-			const expected = false;
-			expect(actual).toEqual(expected);
-		});
+		// it("returns false when blockchain doesn't contain given tranaction", () => {
+		// 	Blockchain.blocks = validChain;
+		// 	const actual = Blockchain.containsTransaction(
+		// 		"d5d4e5db28820ed5098b63e398688ae34b42b206f43712af0ac640409f48150F"
+		// 	);
+		// 	const expected = false;
+		// 	expect(actual).toEqual(expected);
+		// });
 	});
 });

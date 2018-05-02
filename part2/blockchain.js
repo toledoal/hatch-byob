@@ -95,10 +95,10 @@ Object.assign(module.exports,{
         
     },
     blockIsValid: function(block){
-        if (Array.isArray(block)){
-            if (block.hash.length !== 64){
+      
+            if (Array.isArray(block.data)){
                 return true;
-            }
+            
         }else{
             return false;
         }
