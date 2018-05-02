@@ -91,15 +91,26 @@ async function onMessage(req,res) {
 				recordType == "transaction" &&
 				action !== ""
 			) {
+				if (req.query.hash){
 				let statusMsg = {};
 
+				let isPending = TransactionPool.isPending(req.query.hash);;
+				let isInvalid = TransactionPool.isInvalid(req.query.hash);
+				//let containsIt = Blockchain.con.isPending();
 				// TODO
+				if (isPending !== undefined){
+				   Object.assign(statusMsg, {Pending: isPending} );
+				}
 
-				// Hints:
-				//
-				// isPending(..)
-				// isInvalid(..)
+				if (isInvalid !== undefined){
+					Object.assign(statusMsg, {IsInvalid: isInvalid} );
+				 }
+
+				}
+
 				// containsTransaction(..)
+				res.writeHead(200,Object.assign({},JSON_HEADERS,CORS_HEADERS));
+					res.end(JSON.stringify({ status: statusMsg }));
 
 				return;
 			}
