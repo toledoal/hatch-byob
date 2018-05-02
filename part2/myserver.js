@@ -20,9 +20,10 @@ if (args.load) {
 	let contents = fs.readFileSync(file,"utf-8");
 	let blocks = JSON.parse(contents);
 
-	// TODO
-
-	// Hint: isValid()
+	// Validates the block chain
+	if (Blockchain.isValid()){
+		Blockchain.blocks = blocks;
+		}
 }
 
 var CORS_HEADERS = {
@@ -73,16 +74,15 @@ async function onMessage(req,res) {
 
 				// TODO
 
-				// Hints:
-				//
-				// TransactionPool.accept(..)
-				//
-				// res.writeHead(200,Object.assign({},JSON_HEADERS,CORS_HEADERS));
-				// res.end(JSON.stringify({ status: "OK" }));
-				//
-				// BLOCK_SIZE
-				//
-				// addNewBlock()
+				let acceptable = TransactionPool.accept(transaction);
+				 
+				res.writeHead(200,Object.assign({},JSON_HEADERS,CORS_HEADERS));
+				res.end(JSON.stringify({ status: "OK" }));
+
+				if(acceptable){
+					addNewBlock();
+				}
+				
 
 				return;
 			}

@@ -1,6 +1,7 @@
 "use strict";
 
 var Crypto = require("crypto-js");
+var Transaction = require("../part2/transaction");
 
 Object.assign(module.exports,{
     blocks: [
@@ -12,6 +13,9 @@ Object.assign(module.exports,{
             timestamp: 1523291999654,
         }],
     addBlock: function(blockData){
+        if (blockData === null){
+        return false;
+        } else{
         let block = {
             data: blockData,
             index: this.blocks[this.blocks.length - 1].index + 1,
@@ -20,6 +24,8 @@ Object.assign(module.exports,{
         }
         block.hash = this.createBlockHash(block);
         this.blocks.push(block);
+        return block;
+        } 
     },
     createBlockHash: function(data){
         return Crypto.SHA256(`${data.prevHash};${data.index};${JSON.stringify(data.data)};${data.timestamp}`).toString();
@@ -53,7 +59,8 @@ Object.assign(module.exports,{
 
                 let dataString = this.blocks.filter( (block, i, arr) => {
                     // Validates block data is string
-                    if (typeof block.data !== "string"){
+                    if (!Array.isArray(block.data) && block.data !== 'genesis!'){
+                        console.log(block);
                         return block;
                     }
                 });
@@ -95,13 +102,31 @@ Object.assign(module.exports,{
         
     },
     blockIsValid: function(block){
-      
-            if (Array.isArray(block.data)){
-                return true;
-            
-        }else{
+
+        if (typeof block !== "object"){
+            return false;
+         }
+        
+        if (!Array.isArray(block.data)){
+                return false;    
+        }
+
+        let invalidTx;
+        block.data.forEach(tx => {
+           if (!Transaction.isValid(tx)){
+               invalidTx = true;
+           }
+        });
+
+        if (invalidTx){
             return false;
         }
+
+        if (block.hash !== this.createBlockHash(block).toString()){
+            return false;
+        }
+
+        return true;
     },
     containsTransaction: function(){
 
